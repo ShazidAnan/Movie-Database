@@ -1,14 +1,16 @@
-import express from 'express';  // Import Express
-import Movie from '../models/Movie.js';  // Import the Movie model
+import express from 'express';
+import Movie from '../models/Movie.js';
 
 const router = express.Router();
 
-// Create a movie
+// Add a new movie
 router.post('/', async (req, res) => {
+  const { title, genre, director, releaseYear } = req.body;
+
   try {
-    const newMovie = new Movie(req.body);
+    const newMovie = new Movie({ title, genre, director, releaseYear });
     await newMovie.save();
-    res.status(201).json(newMovie);
+    res.status(201).json({ message: 'Movie added successfully', movie: newMovie });
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
@@ -57,4 +59,4 @@ router.delete('/:id', async (req, res) => {
   }
 });
 
-export default router;  // Export the router
+export default router;
