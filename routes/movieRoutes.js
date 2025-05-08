@@ -4,7 +4,7 @@ import authMiddleware from '../middleware/authMiddleware.js';
 
 const router = express.Router();
 
-// 📌 Public: Get all movies
+// Public: Get all movies
 router.get('/', async (req, res) => {
   try {
     const movies = await Movie.find();
@@ -14,7 +14,7 @@ router.get('/', async (req, res) => {
   }
 });
 
-// 📌 Public: Get single movie by ID
+// Public: Get single movie by ID
 router.get('/:id', async (req, res) => {
   try {
     const movie = await Movie.findById(req.params.id);
@@ -25,7 +25,7 @@ router.get('/:id', async (req, res) => {
   }
 });
 
-// 🔒 Protected: Add a new movie
+// Protected: Add a new movie
 router.post('/', authMiddleware, async (req, res) => {
   const { title, genre, director, releaseYear } = req.body;
 
@@ -42,7 +42,7 @@ router.post('/', authMiddleware, async (req, res) => {
   }
 });
 
-// 🔒 Protected: Update movie
+// Protected: Update movie
 router.put('/:id', authMiddleware, async (req, res) => {
   try {
     const updatedMovie = await Movie.findByIdAndUpdate(req.params.id, req.body, { new: true });
@@ -53,7 +53,7 @@ router.put('/:id', authMiddleware, async (req, res) => {
   }
 });
 
-// 🔒 Protected: Delete movie
+// Protected: Delete movie
 router.delete('/:id', authMiddleware, async (req, res) => {
   try {
     const deletedMovie = await Movie.findByIdAndDelete(req.params.id);
